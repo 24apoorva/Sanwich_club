@@ -1,12 +1,9 @@
 package com.udacity.sandwichclub;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,9 +14,6 @@ import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -27,7 +21,6 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
-    private final String BULLET_POINT = "\u2022";
     @BindView(R.id.origin_tv)
     TextView mainName_tv;
     @BindView(R.id.also_known_inv_tv)
@@ -85,10 +78,11 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void populateUI(Sandwich sandwich) {
+        String bulletPoint = "\u2022";
         //to display Main Name
         mainName_tv.setText(sandwich.getMainName());
         //To display Other Names ie: Also known as names
-        String otherNames = TextUtils.join("\n" + BULLET_POINT, sandwich.getAlsoKnownAs());
+        String otherNames = TextUtils.join("\n" + bulletPoint, sandwich.getAlsoKnownAs());
         if (sandwich.getAlsoKnownAs().size() == 1 || otherNames.isEmpty()) {
             //if also known As is empty display no data available
             if (otherNames.isEmpty()) {
@@ -99,7 +93,8 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             inv_alsoKnown_tv.setVisibility(View.VISIBLE);
             inv_alsoKnown_tv.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
-            inv_alsoKnown_tv.setText(BULLET_POINT + otherNames);
+            String other_Names = bulletPoint + otherNames;
+            inv_alsoKnown_tv.setText(other_Names);
         }
         //To display Place of Origin
         String place = sandwich.getPlaceOfOrigin();
@@ -111,8 +106,8 @@ public class DetailActivity extends AppCompatActivity {
         //To display description
         description_tv.setText(sandwich.getDescription());
         //To display ingredients
-        String ingredientsList = BULLET_POINT;
-        ingredientsList += TextUtils.join("\n" + BULLET_POINT, sandwich.getIngredients());
+        String ingredientsList = bulletPoint;
+        ingredientsList += TextUtils.join("\n" + bulletPoint, sandwich.getIngredients());
         ingredients_tv.setText(ingredientsList);
 
     }

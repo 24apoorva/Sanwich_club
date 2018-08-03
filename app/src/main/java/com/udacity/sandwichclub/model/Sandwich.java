@@ -5,17 +5,17 @@ import java.util.List;
 public class Sandwich {
 
     private String mainName;
-    private List<String> alsoKnownAs = null;
+    private List<String> alsoKnownAs;
     private String placeOfOrigin;
     private String description;
     private String image;
-    private List<String> ingredients = null;
+    private List<String> ingredients;
 
     /**
      * No args constructor for use in serialization
      */
-    public Sandwich() {
-    }
+   // public Sandwich() {
+    //}
 
     public Sandwich(String mainName, List<String> alsoKnownAs, String placeOfOrigin, String description, String image, List<String> ingredients) {
         this.mainName = mainName;
