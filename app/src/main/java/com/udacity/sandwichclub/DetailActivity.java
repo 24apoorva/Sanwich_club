@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,17 +20,34 @@ import com.udacity.sandwichclub.utils.JsonUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
+    private final String BULLET_POINT = "\u2022";
+    @BindView(R.id.origin_tv)
+    TextView mainName_tv;
+    @BindView(R.id.also_known_inv_tv)
+    TextView inv_alsoKnown_tv;
+    @BindView(R.id.also_known_tv)
+    TextView alsoKnown_tv;
+    @BindView(R.id.description_tv)
+    TextView description_tv;
+    @BindView(R.id.ingredients_tv)
+    TextView ingredients_tv;
+    @BindView(R.id.place_of_origin_tv)
+    TextView placeOfOrigin_tv;
+    @BindView(R.id.image_iv)
+    ImageView image_iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
-        ImageView ingredientsIv = findViewById(R.id.image_iv);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -56,7 +74,7 @@ public class DetailActivity extends AppCompatActivity {
                 .load(sandwich.getImage())
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.drawable.image_unavailable)
-                .into(ingredientsIv);
+                .into(image_iv);
 
         setTitle(sandwich.getMainName());
     }
@@ -68,74 +86,34 @@ public class DetailActivity extends AppCompatActivity {
 
     private void populateUI(Sandwich sandwich) {
         //to display Main Name
-        displayTextView(R.id.origin_tv, sandwich.getMainName());
+        mainName_tv.setText(sandwich.getMainName());
         //To display Other Names ie: Also known as names
-        String otherNames = convToString(sandwich.getAlsoKnownAs());
-        TextView alsoKnown;
+        String otherNames = TextUtils.join("\n" + BULLET_POINT, sandwich.getAlsoKnownAs());
         if (sandwich.getAlsoKnownAs().size() == 1 || otherNames.isEmpty()) {
+            //if also known As is empty display no data available
             if (otherNames.isEmpty()) {
                 otherNames = getResources().getString(R.string.no_data);
             }
-            alsoKnown = (TextView) findViewById(R.id.also_known_tv);
-            alsoKnown.setVisibility(View.VISIBLE);
-            //if alsoknownAs is empty display no data available
-
+            alsoKnown_tv.setVisibility(View.VISIBLE);
+            alsoKnown_tv.setText(otherNames);
         } else {
-            alsoKnown = (TextView) findViewById(R.id.also_known_inv_tv);
-            alsoKnown.setVisibility(View.VISIBLE);
-            alsoKnown.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            inv_alsoKnown_tv.setVisibility(View.VISIBLE);
+            inv_alsoKnown_tv.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            inv_alsoKnown_tv.setText(BULLET_POINT + otherNames);
         }
-        alsoKnown.setText(otherNames);
         //To display Place of Origin
         String place = sandwich.getPlaceOfOrigin();
         //if Place of Origin is empty display no data available
         if (place.isEmpty()) {
             place = getResources().getString(R.string.no_data);
         }
-        displayTextView(R.id.place_of_origin_tv, place);
+        placeOfOrigin_tv.setText(place);
         //To display description
-        displayTextView(R.id.description_tv, sandwich.getDescription());
-
+        description_tv.setText(sandwich.getDescription());
         //To display ingredients
-        String ingredientsList = convToString(sandwich.getIngredients());
-        displayTextView(R.id.ingredients_tv, ingredientsList);
+        String ingredientsList = BULLET_POINT;
+        ingredientsList += TextUtils.join("\n" + BULLET_POINT, sandwich.getIngredients());
+        ingredients_tv.setText(ingredientsList);
 
-    }
-
-    /**
-     * This method is used to display TextView
-     *
-     * @param id     input id of the text view
-     * @param string -- string to display
-     */
-    private void displayTextView(int id, String string) {
-        TextView textView = (TextView) findViewById(id);
-        textView.setText(string);
-    }
-
-    /**
-     * This method can be used to convert list items to single string
-     *
-     * @param string List array
-     * @return single string
-     */
-    private String convToString(List<String> string) {
-        StringBuilder builder = new StringBuilder();
-        int size = string.size();
-        for (String otherNames : string) {
-            if (string.size() == 1) {
-                builder.append(otherNames);
-                break;
-            }
-            if (size < 2) {
-                builder.append("\u2022 " + otherNames);
-            } else {
-                builder.append("\u2022 " + otherNames + "\n");
-                size--;
-                Log.i("for my record", "size is " + size);
-
-            }
-        }
-        return builder.toString();
     }
 }

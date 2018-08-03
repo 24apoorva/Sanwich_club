@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/image_iv"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/image_height"
             android:adjustViewBounds="true"
             android:contentDescription="@string/sandwich_picture_content_description"
             android:scaleType="centerCrop"
@@ -36,7 +36,7 @@
                 style="@style/details_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Bosna" />
+                tools:text="@string/bosna" />
         </LinearLayout>
 
         <LinearLayout
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
-                tools:text="Bosner" />
+                tools:text="@string/bosner" />
 
         </LinearLayout>
 
@@ -65,9 +65,9 @@
             android:id="@+id/also_known_inv_tv"
             style="@style/details_style"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/zero_dp"
             android:visibility="invisible"
-            tools:text="Bosner" />
+            tools:text="@string/bosner" />
 
         <TextView
             style="@style/data_name_style"
@@ -101,7 +101,7 @@
                 style="@style/details_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Austria" />
+                tools:text="@string/austria" />
         </LinearLayout>
 
         <TextView
