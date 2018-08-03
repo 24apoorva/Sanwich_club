@@ -35,7 +35,6 @@ public class DetailActivity extends AppCompatActivity {
         if (intent == null) {
             closeOnError();
         }
-
         int position = intent.getIntExtra(EXTRA_POSITION, DEFAULT_POSITION);
         if (position == DEFAULT_POSITION) {
             // EXTRA_POSITION not found in intent
@@ -56,7 +55,7 @@ public class DetailActivity extends AppCompatActivity {
         Picasso.with(this)
                 .load(sandwich.getImage())
                 .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .error(R.drawable.image_unavailable)
                 .into(ingredientsIv);
 
         setTitle(sandwich.getMainName());
@@ -69,62 +68,74 @@ public class DetailActivity extends AppCompatActivity {
 
     private void populateUI(Sandwich sandwich) {
         //to display Main Name
-        TextView name = (TextView)findViewById(R.id.origin_tv);
-        name.setText(sandwich.getMainName());
+        displayTextView(R.id.origin_tv, sandwich.getMainName());
         //To display Other Names ie: Also known as names
         String otherNames = convToString(sandwich.getAlsoKnownAs());
         TextView alsoKnown;
-       if (sandwich.getAlsoKnownAs().size() == 1 || otherNames.isEmpty()){
-           alsoKnown=(TextView)findViewById(R.id.also_known_tv);
-           alsoKnown.setVisibility(View.VISIBLE);
-           //if alsoknownAs is empty display no data available
-           if(otherNames.isEmpty()){
-               otherNames = getResources().getString(R.string.no_data);
-           }
-       }else {
-           alsoKnown = (TextView) findViewById(R.id.also_known_inv_tv);
-           alsoKnown.setVisibility(View.VISIBLE);
-           alsoKnown.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
-       }
+        if (sandwich.getAlsoKnownAs().size() == 1 || otherNames.isEmpty()) {
+            if (otherNames.isEmpty()) {
+                otherNames = getResources().getString(R.string.no_data);
+            }
+            alsoKnown = (TextView) findViewById(R.id.also_known_tv);
+            alsoKnown.setVisibility(View.VISIBLE);
+            //if alsoknownAs is empty display no data available
+
+        } else {
+            alsoKnown = (TextView) findViewById(R.id.also_known_inv_tv);
+            alsoKnown.setVisibility(View.VISIBLE);
+            alsoKnown.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        }
         alsoKnown.setText(otherNames);
         //To display Place of Origin
-        TextView placeOfOrigin = (TextView)findViewById(R.id.place_of_origin_tv);
         String place = sandwich.getPlaceOfOrigin();
         //if Place of Origin is empty display no data available
-        if(place.isEmpty()){
+        if (place.isEmpty()) {
             place = getResources().getString(R.string.no_data);
         }
-        placeOfOrigin.setText(place);
+        displayTextView(R.id.place_of_origin_tv, place);
         //To display description
-        TextView description = (TextView)findViewById(R.id.description_tv);
-        description.setText(sandwich.getDescription());
+        displayTextView(R.id.description_tv, sandwich.getDescription());
+
         //To display ingredients
-        TextView ingredients = (TextView)findViewById(R.id.ingredients_tv);
         String ingredientsList = convToString(sandwich.getIngredients());
-        ingredients.setText(ingredientsList);
+        displayTextView(R.id.ingredients_tv, ingredientsList);
+
+    }
+
+    /**
+     * This method is used to display TextView
+     *
+     * @param id     input id of the text view
+     * @param string -- string to display
+     */
+    private void displayTextView(int id, String string) {
+        TextView textView = (TextView) findViewById(id);
+        textView.setText(string);
     }
 
     /**
      * This method can be used to convert list items to single string
+     *
      * @param string List array
      * @return single string
      */
-    private String convToString(List<String>string){
+    private String convToString(List<String> string) {
         StringBuilder builder = new StringBuilder();
         int size = string.size();
         for (String otherNames : string) {
-            if(string.size() == 1){
+            if (string.size() == 1) {
                 builder.append(otherNames);
                 break;
             }
-            if (size < 2){
-                builder.append("\u2022 Bullet" + otherNames);
-            }else{
-            builder.append("\u2022 Bullet" + otherNames + "\n");
-            size--;
-            Log.i("for my record","size is "+size);
+            if (size < 2) {
+                builder.append("\u2022 " + otherNames);
+            } else {
+                builder.append("\u2022 " + otherNames + "\n");
+                size--;
+                Log.i("for my record", "size is " + size);
 
-        }}
+            }
+        }
         return builder.toString();
     }
 }
