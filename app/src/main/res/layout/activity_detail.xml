@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="com.udacity.sandwichclub.DetailActivity">
+
+        <ImageView
+            android:id="@+id/image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/sandwich_picture_content_description"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/smoked_turkey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/data_name_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_main_name" />
+
+            <TextView
+                android:id="@+id/origin_tv"
+                style="@style/details_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Bosna" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/data_name_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_also_known_as_label" />
+
+            <TextView
+                android:id="@+id/also_known_tv"
+                style="@style/details_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                tools:text="Bosner" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/also_known_inv_tv"
+            style="@style/details_style"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            tools:text="Bosner" />
+
+        <TextView
+            style="@style/data_name_style"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_ingredients_label" />
+
+        <TextView
+            android:id="@+id/ingredients_tv"
+            style="@style/details_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/ingredients_textview" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/data_name_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_place_of_origin_label" />
+
+            <TextView
+                android:id="@+id/place_of_origin_tv"
+                style="@style/details_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Austria" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/data_name_style"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_description_label" />
+
+        <TextView
+            android:id="@+id/description_tv"
+            style="@style/details_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            tools:text="@string/description_textview" />
+
+    </LinearLayout>
+</ScrollView>
